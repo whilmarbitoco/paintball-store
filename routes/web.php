@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('partials.home');
+    return view('partials.home', ['products' => Product::all()]);
 });
 
 
@@ -32,7 +33,7 @@ Route::resource('/dashboard', AdminController::class)->middleware(['auth', 'veri
 Route::middleware('auth')->group(function () {
     Route::post('/products', [ProductController::class, 'store'])->name('products.upload');
     Route::put('/products/{id}', [ProductController::class, 'update']);
-    Route::delete('/products/{id}', [ProductController::class, 'destroy']);
+    Route::delete('/products/{id}', [ProductController::class, 'destroy'])->name('products.delete');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

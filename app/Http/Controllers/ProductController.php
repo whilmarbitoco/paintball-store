@@ -35,30 +35,24 @@ class ProductController extends Controller
             "productDescription" => "required",
             "productPrice" => "nullable|numeric|min:0",
             "productQuantity" => "nullable|integer|min:0",
-            "productImage" => "nullable|image|mimes:jpeg,png,jpg,gif|max:2048",
+            "productImage" => "nullable|image|mimes:jpeg,png,jpg|max:5048",
         ]);
 
-        // Store the image in the 'public/images' directory
-        if ($request->hasFile('productImage')) {
-            $path = $request->file('productImage')->store('images', 'public');
-        } else {
-            $path = null; // If no image is provided
-        }
+        $imgName = time() . '-' . $request->productName . '.' . $request->productImage->extension();
 
-        // Create a new Product instance and fill it with the form data
+        $request->productImage->move(public_path('images'), $imgName);
+
         $product = new Product();
         $product->name = $request->input('productName');
         $product->description = $request->input('productDescription');
         $product->price = $request->input('productPrice');
         $product->quantity = $request->input('productQuantity');
+        $product->image_url = $imgName;
         $product->user_id = Auth::id();
-        $product->image_url = $path; // Save the image path to the database
 
-        // Save the product to the database
+
         $product->save();
-        dd($product);
-        // Redirect back with success message
-        // return redirect()->back()->with('success', 'Product added successfully.');
+        return redirect()->back()->with('success', 'Product added successfully.');
     }
 
 
@@ -92,6 +86,14 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $product = Product::find($id);
+
+        if ($product) {
+            $product->delete();
+
+            return redirect()->back();
+        } else {
+            return redirect()->back();
+        }
     }
 }

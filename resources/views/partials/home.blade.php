@@ -3,5 +3,5 @@
 @section('content')
 
 <x-hero />
-<x-products />
+<x-products :products="$products" />
 @endsection

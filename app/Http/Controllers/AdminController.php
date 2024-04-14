@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,7 +13,8 @@ class AdminController extends Controller
      */
     public function index(Request $request)
     {
-        return view('partials.dashboard')->with("user", $request->user());
+        return view('partials.dashboard', ["user" => $request->user(), "products" => Product::all()]);
+        // ->with("user", $request->user())
     }
 
     /**
@@ -60,6 +62,5 @@ class AdminController extends Controller
      */
     public function destroy(string $id)
     {
-        //
     }
 }

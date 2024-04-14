@@ -6,7 +6,7 @@
 
     <div class="card m-sm-2 m-lg-5 p-4 px-5">
         @if(isset($success))
-        <h1>{{ $success }}</h1>
+        <h1 class="text-red">{{ $success }}</h1>
         @endif
 
         <form method="POST" action="{{ route('products.upload') }}" enctype="multipart/form-data">

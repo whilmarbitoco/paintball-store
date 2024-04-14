@@ -1,7 +1,6 @@
 @extends('layouts.layout')
 
 @section('content')
-
-<x-products />
+<x-products :products="$products" />
 
 @endsection

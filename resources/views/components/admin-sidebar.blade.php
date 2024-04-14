@@ -11,6 +11,10 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                     Products
                 </a>
+                <a class="nav-link" href="/dashboard/create">
+                    <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                    Create Product
+                </a>
 
             </div>
         </div>

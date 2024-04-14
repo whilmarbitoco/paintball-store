@@ -21,11 +21,19 @@ Route::get('/', function () {
 });
 
 
-Route::resource("/products", ProductController::class);
+// Route::resource("/products", ProductController::class);
+
+Route::get('/products', [ProductController::class, 'index']);
+Route::get('/products/{id}', [ProductController::class, 'show']);
+
 
 Route::resource('/dashboard', AdminController::class)->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {
+    Route::post('/products', [ProductController::class, 'store'])->name('products.upload');
+    Route::put('/products/{id}', [ProductController::class, 'update']);
+    Route::delete('/products/{id}', [ProductController::class, 'destroy']);
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

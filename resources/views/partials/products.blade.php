@@ -3,4 +3,5 @@
 @section('content')
 
 <x-products />
+
 @endsection
